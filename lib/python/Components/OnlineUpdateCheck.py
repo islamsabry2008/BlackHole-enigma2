@@ -77,7 +77,7 @@ class FeedsStatusCheck:
 	def getFeedStatus(self):
 		officialReleaseFeedsUri = "openbh.net"
 		status = 1
-		trafficLight = "unknown"
+		trafficLight = "stable"
 		if self.adapterAvailable():
 			if self.NetworkUp():
 				if SystemInfo["imagetype"] == "release" and officialReleaseFeedsUri in SystemInfo["feedsurl"]:  # we know the network is good now so only do this check on release images where the release domain applies
