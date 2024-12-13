@@ -96,6 +96,8 @@ config.backupmanager.number_to_keep = ConfigNumber(default=0)
 
 def isRestorableSettings(imageversion):
 	minimum_version = 4.2
+	if imageversion.count(".") > 1:
+		imageversion = imageversion[0:imageversion.rfind(".")]
 	try:
 		imageversion = float(imageversion)
 	except:
@@ -105,6 +107,8 @@ def isRestorableSettings(imageversion):
 
 def isRestorablePlugins(imageversion):
 	minimum_version = 4.2
+	if imageversion.count(".") > 1:
+		imageversion = imageversion[0:imageversion.rfind(".")]
 	try:
 		imageversion = float(imageversion)
 	except:
