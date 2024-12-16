@@ -137,7 +137,7 @@ class About(AboutBase):
 		skinHeight = getDesktop(0).size().height()
 
 		AboutText += _("Drivers:\t%s\n") % about.driversDate()
-		AboutText += _("Kernel:\t%s\n") % about.getKernelVersionString()
+		AboutText += _("Kernel:\t%s\n") % SystemInfo["kernel"]
 		AboutText += _("GStreamer:\t%s\n") % about.getGStreamerVersionString().replace("GStreamer ", "")
 		if isPluginInstalled("ServiceApp") and config.plugins.serviceapp.servicemp3.replace.value:
 			AboutText += _("4097 iptv player:\t%s\n") % config.plugins.serviceapp.servicemp3.player.value
