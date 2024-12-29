@@ -1300,6 +1300,11 @@ class BackupFiles(Screen):
 	tar_flist = "/tmp/_backup-files.list"					# Filename for backup list
 
 	def Stage5(self):
+		# Return config.usage.power.was_controlled_shutdown to the default value so it doesn't polute the settings file saved by the backup
+		config.usage.power.was_controlled_shutdown.value = config.usage.power.was_controlled_shutdown.default
+		config.usage.power.was_controlled_shutdown.save()
+		configfile.save()
+
 		tmplist = config.backupmanager.backupdirs.value
 		tmplist.append("/tmp/ExtraInstalledPlugins")
 		tmplist.append("/tmp/backupkernelversion")
@@ -1356,6 +1361,11 @@ class BackupFiles(Screen):
 		self.Stage3Completed = True
 		self.Stage4Completed = True
 		self.Stage5Completed = True
+		
+		# Return config.usage.power.was_controlled_shutdown to the normal running state
+		config.usage.power.was_controlled_shutdown.value = not config.usage.power.was_controlled_shutdown.default
+		config.usage.power.was_controlled_shutdown.save()
+		configfile.save()
 
 		# Trim the number of backups to the configured setting...
 		#

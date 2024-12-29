@@ -616,7 +616,6 @@ class OpenBhImageManager(Screen):
 				CMD = "/usr/bin/ofgwrite -rmmcblk0p1 '%s'" % MAINDEST
 			elif fileExists("%s/rootfs.ubi" % MAINDEST) and fileExists("%s/rootfs.tar.bz2" % MAINDEST):  # h9 no SD card - build has both roots causes ofgwrite issue
 				rename("%s/rootfs.tar.bz2" % MAINDEST, "%s/xx.txt" % MAINDEST)
-		print("[ImageManager] running commnd:", CMD)
 		self.Console.ePopen(CMD, self.ofgwriteResult)
 		fbClass.getInstance().lock()
 
@@ -727,7 +726,7 @@ class OpenBhImageManager(Screen):
 			"\n\n" +
 			_("Please note, images are large, generally over 100 MB so downloading over a slow or unstable connection is prohibitive."),
 			"\n\n" +
-			_("Also, instead to downloading, it is possible to send a zipped image to the 'Backup location' by FTP."),
+			_("Also, instead of downloading, it is possible to send a zipped image to the 'Backup location' by FTP."),
 			"\n\n\n" +
 			_("FLASHING"),
 			"\n\n" +
