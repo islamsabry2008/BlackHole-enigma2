@@ -184,7 +184,7 @@ class HotPlugManager:
 					(_("Do nothing"), 0),
 					(_("Permanently ignore this device"), 1),
 					(_("Temporarily mount as %s") % mountPoint, 2),
-					(_("Permanently mount as %s" % mountPoint), 3)
+					(_("Permanently mount as %s") % mountPoint, 3)
 				]
 				if mountPointHdd:
 					default = 4
