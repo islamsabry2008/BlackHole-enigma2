@@ -6,10 +6,11 @@ from twisted.internet.protocol import Factory, Protocol
 
 from enigma import eTimer
 
+from Session import SessionObject
 from Components.Console import Console
 from Components.Harddisk import harddiskmanager, bytesToHumanReadable
 from Plugins.Plugin import PluginDescriptor
-from Screens.MessageBox import ModalMessageBox
+from Screens.MessageBox import MessageBox
 from Tools.Directories import fileReadLines, fileWriteLines
 
 HOTPLUG_SOCKET = "/tmp/hotplug.socket"
@@ -194,7 +195,8 @@ class HotPlugManager:
 				choiceList.append(
 					(_("Permanently mount as %s") % mountPointDevice, 5),
 				)
-				ModalMessageBox.instance.showMessageBox(text=text, list=choiceList, default=default, windowTitle=_("New Storage Device"), callback=newDeviceCallback)
+				print(f"[Hotplug][modalsend]default:{default} choiceList:{choiceList}")
+				SessionObject().session.openWithCallback(newDeviceCallback, MessageBox, text, list=choiceList, default=default, simple=True, title=_("New Storage Device"))
 			else:
 				self.addedDevice.append((DEVNAME, DEVPATH, ID_MODEL))
 				self.timer.start(1000)

@@ -386,9 +386,6 @@ def runScreenTest():
 			# we need session.scart to access it from within menu.xml
 			session.scart = AutoScartControl(session)
 
-	profile("Global MessageBox Screen")
-	modalmessagebox = ModalMessageBox(session)  # noqa: F841
-
 	profile("Init:PowerUpState")
 	PowerUpState(session)
 
@@ -652,9 +649,6 @@ config.misc.RCSource.addNotifier(RCSelectionChanged, immediate_feedback=False)
 
 profile("Standby")
 import Screens.Standby  # noqa: E402
-
-profile("ModalMessageBox")
-from Screens.MessageBox import ModalMessageBox  # noqa: E402
 
 
 from Screens.Menu import MainMenu, mdom  # noqa: E402
