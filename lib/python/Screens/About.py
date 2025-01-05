@@ -143,7 +143,7 @@ class About(AboutBase):
 			AboutText += _("4097 iptv player:\t%s\n") % config.plugins.serviceapp.servicemp3.player.value
 		else:
 			AboutText += _("4097 iptv player:\tDefault player\n")
-		AboutText += _("Python:\t%s\n") % SystemInfo["python"]
+		AboutText += _("Python:\t%s\n") % about.getPythonVersionString()
 		AboutText += _("Last E2 update:\t%s (%s)\n") % (about.getLastCommitHash(), about.getLastCommitDate())
 		AboutText += _("E2 (re)starts:\t%s\n") % config.misc.startCounter.value
 		uptime = about.getBoxUptime()
