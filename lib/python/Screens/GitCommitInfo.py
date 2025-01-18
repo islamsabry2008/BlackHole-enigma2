@@ -31,7 +31,7 @@ CommitLogs = [
 	("https://api.github.com/repos/BlackHole/skins/commits", "OpenBh Skins"),
 	("https://api.github.com/repos/oe-alliance/oe-alliance-plugins/commits", "OE-A Plugins"),
 	("https://api.github.com/repos/oe-alliance/AutoBouquetsMaker/commits", "AutoBouquetsMaker"),
-	("https://api.github.com/repos/oe-alliance/branding-module/commits", "Branding Module"),
+	("https://api.github.com/repos/oe-mirrors/branding-module/commits", "Branding Module"),
 ]
 project = 0
 cachedProjects = {}
