@@ -1,8 +1,6 @@
 /*
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
-
 Copyright (c) 2023-2025 OpenATV, jbleyel
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -25,7 +23,6 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE,
 ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-
 For more details about the CC BY-NC-SA 4.0 License, please visit:
 https://creativecommons.org/licenses/by-nc-sa/4.0/
 */
@@ -37,7 +34,29 @@ https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 static std::unordered_map<std::string, std::string> HardwareDB{
 
-#ifdef HWVUSOLO4K
+#ifdef HWDM900
+	{"/devices/platform/brcmstb-ahci.0/ata1/", "SATA"},
+	{"/devices/rdb.4/f03e0000.sdhci/mmc_host/mmc0/", "eMMC"},
+	{"/devices/rdb.4/f03e0200.sdhci/mmc_host/mmc1/", "SD"},
+	{"/devices/rdb.4/f0470600.ohci_v2/usb6/6-0:1.0", "Front panel USB"},
+	{"/devices/rdb.4/f0470300.ehci_v2/usb3/3-0:1.0", "Front panel USB"},
+	{"/devices/rdb.4/f0471000.xhci_v2/usb2/2-0:1.0", "Front panel USB"},
+	{"/devices/rdb.4/f0470300.ehci_v2/usb3/3-1/3-1:1.0", "Front panel USB"},
+	{"/devices/rdb.4/f0470400.ohci_v2/usb5/5-0:1.0", "Rear USB"},
+	{"/devices/rdb.4/f0470500.ehci_v2/usb4/4-0:1.0", "Rear USB"},
+	{"/devices/rdb.4/f0470500.ehci_v2/usb4/4-1/4-1:1.0", "Rear USB"},
+	{"/devices/rdb.4/f0471000.xhci_v2/usb2/2-0:1.0", "Rear USB"}
+#elif HWDM920
+	{"/devices/platform/brcmstb-ahci.0/ata1/", "SATA"},
+	{"/devices/rdb.4/f03e0000.sdhci/mmc_host/mmc0/", "eMMC"},
+	{"/devices/rdb.4/f03e0200.sdhci/mmc_host/mmc1/", "SD"},
+	{"/devices/rdb.4/f0470600.ohci_v2/usb6/6-0:1.0/port1/", "Front USB"},
+	{"/devices/rdb.4/f0470300.ehci_v2/usb3/3-0:1.0/port1/", "Front USB"},
+	{"/devices/rdb.4/f0471000.xhci_v2/usb2/2-0:1.0/port1/", "Front USB"},
+	{"/devices/rdb.4/f0470400.ohci_v2/usb5/5-0:1.0/port1/", "Rear USB"},
+	{"/devices/rdb.4/f0470500.ehci_v2/usb4/4-0:1.0/port1/", "Rear USB"},
+	{"/devices/rdb.4/f0471000.xhci_v2/usb2/2-0:1.0/port2/", "Rear USB"}
+#elif HWVUSOLO4K
 	{"/devices/platform/strict-ahci.0/ata1/", "SATA"},
 	{"/devices/f0490600.ohci/usb10/", "Front USB"},
 	{"/devices/f0480400.ohci/usb7/", "Rear USB 3.0 lower"},
@@ -63,6 +82,16 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/rdb.3/f0470300.ehci_v2/usb3/", "Rear USB 3.0 lower"},
 	{"/devices/rdb.3/f0470500.ehci_v2/usb4/", "Rear USB 3.0 upper"},
 	{"/devices/rdb.3/f0480600.ohci_v2/usb10/", "Front USB"}
+#elif 
+	{"/devices/platform/rdb/f045a000.sata/ata1/", "SATA"},
+	{"/devices/platform/f0470500.ehci/usb2/", "Rear USB 3.0"},
+	{"/devices/platform/f0470300.ehci/usb1/1-1/1-1.2/", "Rear USB lower"},
+	{"/devices/platform/f0470300.ehci/usb1/1-1/1-1.1/", "Rear USB upper"}
+#elif HWH17 // CHECKED
+	{"/devices/platform/f0470300.ehci/usb1/", "Front USB"},
+	{"/devices/platform/f0471000.xhci/usb6/", "Rear USB"},
+	{"/devices/platform/f0471000.ohci/usb4/", "Rear USB"},
+	{"/devices/platform/f0470500.ehci/usb2/", "Rear USB"}
 #elif HWDUO2 // CHECKED
 	{"/devices/platform/strict-ahci.0/ata1/", "eSATA"},
 	{"/devices/platform/ehci-brcm.2/usb3/", "Front USB"},
@@ -103,14 +132,23 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-1/2-1", "Rear USB 3.0, left"},
 	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.3", "Rear USB-C"},
 	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.3", "Rear USB-C"}
-#elif HWSF8008
-	{"/devices/platform/soc/f98a0000.xhci/usb4/4-1/4-1", "Right USB"},
-	{"/devices/platform/soc/f98a0000.xhci/usb4/3-1/3-1", "Right USB"},
-	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2", "Rear USB"},
-	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3", "Rear microSD"}
+#elif HWHD51 // CHECKED
+	{"/devices/platform/rdb/f045a000.sata/ata1/", "SATA"},
+	{"/devices/platform/f0470300.ehci/usb1/1-1/1-1.2", "Front USB"},
+	{"/devices/platform/f0470300.ehci/usb1/1-1/1-1.3", "Rear USB left"},
+	{"/devices/platform/f0471000.xhci/usb6/6-2/6-2", "Rear USB right"},
+	{"/devices/platform/f0470500.ehci/usb2/2-1/2-1", "Rear USB right"}
+#elif HWHD61 // CHECKED
+	{"/devices/platform/soc/f9820000.himciv200.SD/mmc_host/mmc1", "Front panel, microSD"}, 
+	{"/devices/platform/soc/f98a0000.xhci/usb3/3-1/3-1", "Front panel USB"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1", "Rear USB"},
+	{"/devices/platform/soc/f9900000.hiahci/ata1/", "SATA"}
 #elif HWSFX6008 // CHECKED
 	{"/devices/platform/soc/f98a0000.xhci/usb3/3-1/3-1", "Left USB"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1", "Rear USB"}
+#elif HWOSNINO // CHECKED
+	{"/devices/platform/ehci-brcm.0/usb1/1-2", "Front USB right"},
+	{"/devices/platform/ehci-brcm.0/usb1/1-1", "Rear USB right"}
 #elif HWPULSE4K
 	{"/devices/platform/soc/f9900000.hiahci/ata1/host0/target0:0:0/0:0:0:0", "SATA"},
 	{"/devices/platform/soc/f98a0000.xhci/usb3/", "Front USB"},
@@ -124,11 +162,29 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/soc/f98a0000.xhci/usb3", "Rear USB left"},
 	{"/devices/platform/soc/f9890000.ehci/usb1", "Rear USB right"},
 	{"/devices/platform/soc/f9820000.himciv200.SD/mmc_host/mmc1", "microSD"}
-#elif HWH7
-	{"/devices/platform/rdb/f045a000.sata/ata1/", "SATA"},
-	{"/devices/platform/f0470500.ehci/usb2/", "Rear USB 3.0"},
-	{"/devices/platform/f0470300.ehci/usb1/1-1/1-1.2/", "Rear USB lower"},
-	{"/devices/platform/f0470300.ehci/usb1/1-1/1-1.1/", "Rear USB upper"}
+#elif HWU5 // eg. Dinobot4k
+	{"/devices/platform/soc/f98a0000.xhci/usb3/", "Rear USB"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-2/1-2.3/", "Rear USB Left"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-2/1-2.4/", "Front Left USB"}
+#elif HWSF8008
+	{"/devices/platform/soc/f98a0000.xhci/usb4/4-1/4-1", "Right USB"},
+	{"/devices/platform/soc/f98a0000.xhci/usb4/3-1/3-1", "Right USB"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2", "Rear USB"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3", "Rear microSD"}
+#elif HWET7X00 // CHECKED
+	{"/devices/platform/ehci-brcm.0/usb1/1-1/1-1:1.0", "Rear USB"},
+	{"/devices/platform/ehci-brcm.0/usb1/1-2/1-2:1.0", "Front panel USB"}  
+#elif HWH9COMBO // CHECKED
+	{"/devices/platform/soc/f9820000.himciv200.SD/mmc_host/mmc1/mmc1:0007", "Rear microSD"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1:1.0", "Rear USB"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-2/1-2.4/1-2.4:1.0", "Front panel USB"}
+#elif HWH9 // CHECKED
+	{"/devices/platform/soc/f9820000.himciv200.SD/mmc_host/mmc0/mmc0:0007", "Rear microSD"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1:1.0", "Rear USB"}
+#elif HWH10 // CHECKED
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1", "Rear USB left"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-2", "Rear USB right"},
+	{"/devices/platform/soc/f9900000.hiahci/ata1/", "SATA"}
 #else
 
 #endif
