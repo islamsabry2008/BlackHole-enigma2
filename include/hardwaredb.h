@@ -68,6 +68,10 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/ehci-brcm.2/usb3/", "Front USB"},
 	{"/devices/platform/ehci-brcm.0/usb1/", "Rear USB Lower"},
 	{"/devices/platform/ehci-brcm.1/usb2/", "Rear USB Upper"}
+#elif HWGBIP4K // CHECKED
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3/1-1.3:1.0", "Rear MicroSD"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2/1-1.2:1.0", "Rear Left USB"},
+	{"/devices/platform/soc/f98a0000.xhci/usb3/3-1/3-1:1.0", "Rear Right USB 3.0"},
 #elif HWGBTRIO4K // CHECKED
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3/1-1.3:1.0", "Rear Right MicroSD"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2/1-1.2:1.0", "Rear Right USB"},
