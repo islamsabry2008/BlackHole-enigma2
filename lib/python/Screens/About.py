@@ -286,7 +286,7 @@ class Devices(Screen):
 					hddp = hddp.replace("ATA ", "", 2)
 					hddp = hddp.replace("SATA ", "SATA Internal Bus ").replace("(HDD)", "HDD").replace(" (", "").replace(")", "")
 				if "USB" in hddp:
-					hddp = hddp.replace(" (SD", "(SD").replace(" (", "").replace(")", "")
+					hddp = hddp.replace(" (SD", "(SD").replace("(", "").replace(") ", "")
 				free = hdd.Totalfree()
 				if free >= 1:
 					free *= 1000000 # convert MB to bytes
