@@ -117,7 +117,7 @@ AS_IF([test "$BOXTYPE" == "multiboxpro"],[AC_DEFINE(HWMULTIBOXPRO, 1,[multiboxpr
 AS_IF([test "$BOXTYPE" == "h7"],[AC_DEFINE(HWH7, 1,[h7])])
 AS_IF([test "$BOXTYPE" == "h9combose"],[AC_DEFINE(HWH9COMBOSE, 1,[h9combose])])
 AS_IF([test "$BOXTYPE" == "h11"],[AC_DEFINE(HWH11, 1,[h11])])
-AS_IF([test "$BOXTYPE" == "dual"],[AC_DEFINE(HWHDUAL, 1,[dual])])
+AS_IF([test "$MACHINEBUILD" == "dual"],[AC_DEFINE(HWHDUAL, 1,[dual])])
 
 AC_ARG_WITH(accelerationthreshold,
 	AS_HELP_STRING([--with-accelerationthreshold=n], [use acceleration threshold of n bytes]),
