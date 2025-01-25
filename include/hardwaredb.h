@@ -125,17 +125,17 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/soc/f98a0000.xhci/usb4/3-1/3-1", "Right USB"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2", "Rear USB"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3", "Rear MicroSD"}
-#elif HWDUO2 // CHECKED
+#elif HWVUDUO2 // CHECKED
 	{"/devices/platform/strict-ahci.0/ata1/", "eSATA"},
 	{"/devices/platform/ehci-brcm.2/usb3/", "Front USB"},
 	{"/devices/platform/ehci-brcm.0/usb1/", "Rear Lower USB"},
 	{"/devices/platform/ehci-brcm.1/usb2/", "Rear Upper USB"}
-#elif HWDUO4K
+#elif HWVUDUO4K
 	{"/devices/platform/rdb/8b0a000.sata/", "SATA"},
 	{"/devices/platform/rdb/8b39000.xhci_v2/usb1/", "Front USB"},
 	{"/devices/platform/rdb/8b39000.xhci_v2/usb2/2-2/", "Rear Upper USB 3.0"},
 	{"/devices/platform/rdb/8b39000.xhci_v2/usb2/2-1/", "Rear Lower USB 3.0"}
-#elif HWDUO4KSE
+#elif HWVUDUO4KSE
 	{"/devices/platform/rdb/f045a000.sata/", "SATA"},
 	{"/devices/platform/rdb/f0480500.ehci_v2/usb6/", "Front USB"},
 	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/", "Rear Upper USB 3.0"},
@@ -145,7 +145,7 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/f0490600.ohci/usb10/", "Front USB"},
 	{"/devices/f0480400.ohci/usb7/", "Rear Lower USB 3.0"},
 	{"/devices/f0480600.ohci/usb8/", "Rear Upper USB 3.0"}
-#elif HWUNO4KSE
+#elif HWVUUNO4KSE
 	{"/devices/platform/rdb/f045a000.sata/ata1/", "SATA"},
 	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1", "Rear Lower USB 3.0"},
 	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-1/2-1", "Rear Lower USB 3.0"},
