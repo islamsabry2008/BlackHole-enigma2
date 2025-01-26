@@ -90,6 +90,9 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/soc/f9820000.himciv200.SD/mmc_host/mmc1/mmc1:1234", "Rear MicroSD"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1:1.0", "Rear USB"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-2/1-2.4/1-2.4:1.0", "Front USB"}
+#elif HWH11 // CHECKED
+	{"/devices/platform/soc/f9820000.himciv200.SD/mmc_host/mmc1/mmc1:1234", "Rear MicroSD"},
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1:1.0", "Rear USB"}
 #elif HWMULTIBOXPRO // CHECKED
 	{"/devices/platform/soc/f98a0000.xhci/usb3", "Rear USB Left"},
 	{"/devices/platform/soc/f9890000.ehci/usb1", "Rear USB Right"},
