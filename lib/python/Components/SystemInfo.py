@@ -284,7 +284,7 @@ SystemInfo["hasScart"] = SystemInfo["scart"]
 SystemInfo["hasScartYUV"] = SystemInfo["scartyuv"]
 SystemInfo["hasYUV"] = SystemInfo["yuv"]
 SystemInfo["VideoModes"] = CHIPSET in (  # 2160p and 1080p capable hardware...
-	"5272s", "7251", "7251s", "7252", "7252s", "7278", "7366", "7376", "7444s", "72604", "3798cv200", "3798mv200", "3798mv200advca", "3798mv200h", "3798mv300"
+	"5272s", "7251", "7251s", "7252", "7252s", "7278", "7366", "7376", "7444s", "72604", "3798cv200", "3798mv200", "3798mv200advca", "3798mv200h", "3798mv300", "3798mv310"
 ) and (
 	["720p", "1080p", "2160p", "2160p30", "1080i", "576p", "576i", "480p", "480i"],  # Normal modes.
 	{"720p", "1080p", "2160p", "2160p30", "1080i"}  # Widescreen modes.
