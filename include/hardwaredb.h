@@ -1,17 +1,17 @@
 /*
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
 
-CopyRight (c) 2023-2025 OpenATV, jbleyel
+Copyright (c) 2023-2025 OpenATV, jbleyel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the Rights
+in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 1. Non-Commercial Use: You may not use the Software or any derivative works
    for commercial purposes without obtaining explicit permission from the
-   copyRight holder.
+   copyright holder.
 2. Share Alike: If you distribute or publicly perform the Software or any
    derivative works, you must do so under the same license terms, and you
    must make the source code of any derivative works available to the
@@ -21,7 +21,7 @@ furnished to do so, subject to the following conditions:
 THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL
-THE AUTHORS OR COPYRight HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE,
 ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
@@ -42,26 +42,26 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1:1.0", "Front USB"}
 #elif HWGBIP4K // CHECKED
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3/1-1.3", "Rear MicroSD"},
-	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2/1-1.2", "Rear Left USB"},
-	{"/devices/platform/soc/f98a0000.xhci/usb4/4-1/4-1", "Rear Right USB 3.0"}
+	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2/1-1.2", "Rear Right USB"},
+	{"/devices/platform/soc/f98a0000.xhci/usb4/4-1/4-1", "Rear Left USB 3.0"}
 #elif HWGBQUAD4K // CHECKED
 	{"/devices/platform/rdb/f045a000.sata/", "SATA"},
 	{"/devices/platform/rdb/f03e0000.sdhci/mmc_host/", "SD"},
 	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1:1.0", "Front USB"},
-	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.4/4-1.4:1.0", "Rear Right USB"},
-	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.3/4-1.3:1.0", "Rear Left USB"},
-	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.4/2-2.4:1.0", "Rear Right USB 3.0"},
-	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.3/2-2.3:1.0", "Rear Left USB 3.0"},
+	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.4/4-1.4:1.0", "Rear Left USB"},
+	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.3/4-1.3:1.0", "Rear Right USB"},
+	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.4/2-2.4:1.0", "Rear Left USB 3.0"},
+	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.3/2-2.3:1.0", "Rear Right USB 3.0"},
 	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.2/4-1.2:1.0", "Rear Lower USB"},
 	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.1/4-1.1:1.0", "Rear Upper USB"}
 #elif HWGBQUAD4KPRO // CHECKED
 	{"/devices/platform/rdb/f045a000.sata/", "SATA"},
 	{"/devices/platform/rdb/f03e0000.sdhci/mmc_host/", "SD"},
 	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.1", "Front USB"},
-	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.1", "Front USB"},
+	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.1", "Front USB 3.0"},
 	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.4", "Rear Right USB"},
-	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.4", "Rear Right USB"},
-	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1", "Rear Left USB 3.0"},
+	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.4", "Rear Right USB 3.0"},
+	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1", "Rear Left USB"},
 	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-1/2-1", "Rear Left USB 3.0"},
 	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1.3", "Rear USB-C"},
 	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2.3", "Rear USB-C"}
@@ -69,6 +69,7 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.3/1-1.3:1.0", "Rear Right MicroSD"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1.2/1-1.2:1.0", "Rear Right USB"},
 	{"/devices/platform/soc/f98a0000.xhci/usb3/3-1/3-1:1.0", "Rear Left USB 3.0"},
+	{"/devices/platform/soc/f98a0000.xhci/usb4/4-1/4-1:1.0", "Rear Left USB 3.0"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-2/1-2:1.0", "Front USB"}
 #elif HWGBTRIO4KPRO // CHECKED
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-2/1-2", "MicroSD"},
@@ -76,10 +77,11 @@ static std::unordered_map<std::string, std::string> HardwareDB{
 	{"/devices/platform/soc/f98a0000.xhci/usb3/3-1/3-1", "Rear Left USB 3.0"},
 	{"/devices/platform/soc/f9880000.ohci/usb2/2-1/2-1", "Rear Right USB"},
 	{"/devices/platform/soc/f9890000.ehci/usb1/1-1/1-1", "Rear Right USB"}
-#elif HWGBUE4K
+#elif HWGBUE4K // CHECKED
 	{"/devices/platform/rdb/f045a000.sata/ata2/", "SATA"},
 	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1.1/3-1.1:", "Front USB"},
-	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/", "Rear USB 3.0"},
+	{"/devices/platform/rdb/f0470500.ehci_v2/usb4/4-1/4-1:1.0", "Rear Left USB"},
+	{"/devices/platform/rdb/f0471000.xhci_v2/usb2/2-2/2-2:1.0", "Rear Left USB 3.0"},
 	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1.2/3-1.2:", "Rear Upper USB"},
 	{"/devices/platform/rdb/f0470300.ehci_v2/usb3/3-1/3-1.3/3-1.3:", "Rear Lower USB"}
 #elif HWH7
