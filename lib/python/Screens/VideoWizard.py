@@ -140,6 +140,11 @@ class VideoWizard(WizardLanguage, Rc):
 		else:
 			self.avSwitch.setMode(port=self.port, mode=mode, rate=ratesList[0][0])
 
+		if SystemInfo["machinebuild"] == "gbquad4kpro" and mode.startswith("2160p"):  # Workaround for QUAD4K Pro
+			config.av.hdmicolordepth.value = "10bit"
+			config.av.hdmicolordepth.save()
+
+
 	def listRates(self, querymode=None):
 		if querymode is None:
 			querymode = self.mode
