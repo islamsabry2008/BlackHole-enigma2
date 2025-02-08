@@ -507,7 +507,10 @@ def InitAVSwitch():
 					("10bit", _("10bit")),
 					("12bit", _("12bit"))]
 		default = "auto"
-		if SystemInfo["havehdmicolordepthchoices"] and SystemInfo["CanProc"]:
+		if SystemInfo["boxtype"] == "gbquad4kpro":
+			choices = [("10bit", "10bit"), ("12bit", "12bit")]
+			default = "10bit"
+		elif SystemInfo["havehdmicolordepthchoices"] and SystemInfo["CanProc"]:
 			f = "/proc/stb/video/hdmi_colordepth_choices"
 			(choices, default) = readChoices(f, choices, default)
 		config.av.hdmicolordepth = ConfigSelection(choices=choices, default=default)
@@ -839,16 +842,12 @@ def InitAVSwitch():
 				open("/proc/stb/vmpeg/0/pep_apply", "w").write("1")
 			except (IOError, OSError):
 				print("[AVSwitch] couldn't write pep_scaler_sharpness")
-		if SystemInfo["boxtype"] in ("gbquad", "gbquadplus"):
-			config.av.scaler_sharpness = ConfigSlider(default=5, limits=(0, 26))
-		else:
-			config.av.scaler_sharpness = ConfigSlider(default=13, limits=(0, 26))
+		config.av.scaler_sharpness = ConfigSlider(default=13, limits=(0, 26))
 		config.av.scaler_sharpness.addNotifier(setScaler_sharpness)
 	else:
 		config.av.scaler_sharpness = NoSave(ConfigNothing())
 	config.av.edid_override = ConfigYesNo(default=False)
 	iAVSwitch.setConfiguredMode()
-
 
 class VideomodeHotplug:
 	def __init__(self):

@@ -77,6 +77,7 @@ SystemInfo = BoxInfo.boxInfo
 ARCHITECTURE = BoxInfo.getItem("architecture")
 BRAND = BoxInfo.getItem("brand")
 MODEL = BoxInfo.getItem("model")
+RCNAME = BoxInfo.getItem('rcname')
 SOC_FAMILY = BoxInfo.getItem("socfamily")
 SOC_BRAND = split(r'(\d.*)', SOC_FAMILY)[0]
 CHIPSET = split(r'(\d.*)', SOC_FAMILY)[1]
@@ -127,7 +128,7 @@ def getBoxDisplayName():  # This function returns a tuple like ("BRANDNAME", "BO
 
 
 def getRCFile(ext):
-	filename = resolveFilename(SCOPE_SKIN, pathjoin("hardware", "%s.%s" % (BoxInfo.getItem("rcname"), ext)))
+	filename = resolveFilename(SCOPE_SKIN, pathjoin("hardware", f"{RCNAME}.{ext}"))
 	if not isfile(filename):
 		filename = resolveFilename(SCOPE_SKIN, pathjoin("hardware", "dmm1.%s" % ext))
 	return filename
@@ -135,9 +136,11 @@ def getRCFile(ext):
 
 def setRCFile(source):
 	if source == "hardware":
+		SystemInfo["RCName"] = RCNAME
 		SystemInfo["RCImage"] = getRCFile("png")
 		SystemInfo["RCMapping"] = getRCFile("xml")
 	else:
+		SystemInfo["RCName"] = rc_model.getRcFolder()
 		SystemInfo["RCImage"] = resolveFilename(SCOPE_SKIN, pathjoin("rc_models", SystemInfo["rc_model"], "rc.png"))
 		SystemInfo["RCMapping"] = resolveFilename(SCOPE_SKIN, pathjoin("rc_models", SystemInfo["rc_model"], "rcpositions.xml"))
 	if not (isfile(SystemInfo["RCImage"]) and isfile(SystemInfo["RCMapping"])):
@@ -303,7 +306,7 @@ SystemInfo["HasPhysicalLoopthrough"] = ["Vuplus DVB-S NIM(AVL2108)", "GIGA DVB-S
 SystemInfo["HasFBCtuner"] = ["Vuplus DVB-C NIM(BCM3158)", "Vuplus DVB-C NIM(BCM3148)", "Vuplus DVB-S NIM(7376 FBC)", "Vuplus DVB-S NIM(45308X FBC)", "Vuplus DVB-S NIM(45208 FBC)", "DVB-S2 NIM(45208 FBC)", "DVB-S2X NIM(45308X FBC)", "DVB-S2 NIM(45308 FBC)", "DVB-C NIM(3128 FBC)", "BCM45208", "BCM45308X", "BCM3158"]
 SystemInfo["FCCactive"] = False
 SystemInfo["rc_model"] = rc_model.getRcFolder()
-SystemInfo["mapKeyInfoToEpgFunctions"] = SystemInfo["rc_model"] in ("vu", "vu2", "vu3", "vu4")  # due to button limitations of the remote control
-SystemInfo["hasDuplicateVideoAndPvrButtons"] = SystemInfo["rc_model"] in ("edision3",)  # Allow multiple functions only if both buttons are present
-SystemInfo["toggleTvRadioButtonEvents"] = SystemInfo["rc_model"] in ("abcom", "gb3", "gb4", "gb5", "gb6", "gb7", "octagon1", "octagon3", "octagon4", "qviart5", "qviart7", "sf8008", "uclan1")  # due to button limitations of the remote control
+SystemInfo["mapKeyInfoToEpgFunctions"] = RCNAME in ("vu", "vu2", "vu3", "vu4")  # due to button limitations of the remote control
+SystemInfo["hasDuplicateVideoAndPvrButtons"] = RCNAME in ("edision3",)  # Allow multiple functions only if both buttons are present
+SystemInfo["toggleTvRadioButtonEvents"] = RCNAME in ("abcom", "gb3", "gb4", "gb5", "gb6", "gb7", "octagon1", "octagon3", "octagon4", "qviart5", "qviart7", "sf8008", "uclan1")  # due to button limitations of the remote control
 SystemInfo["rc_default"] = SystemInfo["rc_model"] in ("dmm0", )
