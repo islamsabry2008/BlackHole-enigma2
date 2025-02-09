@@ -130,7 +130,7 @@ def getBoxDisplayName():  # This function returns a tuple like ("BRANDNAME", "BO
 def getRCFile(ext):
 	filename = resolveFilename(SCOPE_SKIN, pathjoin("hardware", f"{RCNAME}.{ext}"))
 	if not isfile(filename):
-		filename = resolveFilename(SCOPE_SKIN, pathjoin("hardware", "dmm1.%s" % ext))
+		filename = resolveFilename(SCOPE_SKIN, pathjoin("hardware", f"dmm1.{ext}"))
 	return filename
 
 
