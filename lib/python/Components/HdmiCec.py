@@ -338,48 +338,51 @@ class HdmiCec:
 	instance = None
 
 	def __init__(self):
-		assert HdmiCec.instance is None, "only one HdmiCec instance is allowed!"
-		HdmiCec.instance = self
-		self.wait = eTimer()
-		self.wait.timeout.get().append(self.sendMsgQ)
-		self.queue = []			# if config.hdmicec.minimum_send_interval.value != "0" queue send message ->  (sendMsgQ)
-		self.waitKeyEvent = eTimer()
-		self.waitKeyEvent.timeout.get().append(self.sendKeyEventQ)
-		self.queueKeyEvent = []		# if config.hdmicec.minimum_send_interval.value != "0" queue key event -> sendKeyEventQ
-		self.repeat = eTimer()
-		self.repeat.timeout.get().append(self.sendWakeupMessages)
-		self.delay = eTimer()
-		self.delay.timeout.get().append(self.sendStandbyMessages)
-		self.useStandby = True
-		self.handlingStandbyFromTV = False
 		if config.hdmicec.enabled.value:
+			assert HdmiCec.instance is None, "only one HdmiCec instance is allowed!"
+			HdmiCec.instance = self
+			self.wait = eTimer()
+			self.wait.timeout.get().append(self.sendMsgQ)
+			self.queue = []			# if config.hdmicec.minimum_send_interval.value != "0" queue send message ->  (sendMsgQ)
+			self.waitKeyEvent = eTimer()
+			self.waitKeyEvent.timeout.get().append(self.sendKeyEventQ)
+			self.queueKeyEvent = []		# if config.hdmicec.minimum_send_interval.value != "0" queue key event -> sendKeyEventQ
+			self.repeat = eTimer()
+			self.repeat.timeout.get().append(self.sendWakeupMessages)
+			self.delay = eTimer()
+			self.delay.timeout.get().append(self.sendStandbyMessages)
+			self.useStandby = True
+			self.handlingStandbyFromTV = False
+			print(f"[HdmiCEC][init]3 physical address:{getPhysicalAddress()}")
+			if not config.hdmicec.change_physaddress.value:
+				config.hdmicec.fixed_physical_address.value = getPhysicalAddress()
 			countDots = config.hdmicec.fixed_physical_address.value.count(".")
 			print(f"[HdmiCEC][init]2countDots:{countDots}")
-			if countDots == 3 and config.hdmicec.fixed_physical_address.value[1:3] != ".0":
+			if countDots == 3 and config.hdmicec.fixed_physical_address.value[1:3] != ".0" and config.hdmicec.change_physaddress.value:
 				try:
 					print(f"[HdmiCEC][init]phsyical address changed by setup value:{config.hdmicec.fixed_physical_address.value}")
 					setFixedPhysicalAddress(config.hdmicec.fixed_physical_address.value)
 				except:
 					setFixedPhysicalAddress("0.0.0.0")
+			eHdmiCEC.getInstance().messageReceived.get().append(self.messageReceived)
+			config.misc.standbyCounter.addNotifier(self.onEnterStandby, initial_call=False)
+			# config.misc.DeepStandby.addNotifier(self.onEnterDeepStandby, initial_call=False)
+			self.volumeForwardingEnabled = False
+			self.volumeForwardingDestination = 0
+			self.wakeup_from_tv = False
+			eActionMap.getInstance().bindAction("", -maxsize - 1, self.keyEvent)
+			config.hdmicec.volume_forwarding.addNotifier(self.configVolumeForwarding)
+			config.hdmicec.enabled.addNotifier(self.configVolumeForwarding)
+			if config.hdmicec.enabled.value:
+				if config.hdmicec.report_active_menu.value:
+					if config.hdmicec.report_active_source.value and NavigationInstance.instance and not NavigationInstance.instance.isRestartUI():
+						self.sendMessage(0, "sourceinactive")
+					self.sendMessage(0, "menuactive")
+				if config.hdmicec.handle_deepstandby_events.value and not getFPWasTimerWakeup():
+					self.onLeaveStandby()
 		else:
 			print("[HdmiCEC][init] no set physical address ")
 			setFixedPhysicalAddress("0.0.0.0")			# no fixed physical address send 0 to eHdmiCec C++ driver
-		eHdmiCEC.getInstance().messageReceived.get().append(self.messageReceived)
-		config.misc.standbyCounter.addNotifier(self.onEnterStandby, initial_call=False)
-		# config.misc.DeepStandby.addNotifier(self.onEnterDeepStandby, initial_call=False)
-		self.volumeForwardingEnabled = False
-		self.volumeForwardingDestination = 0
-		self.wakeup_from_tv = False
-		eActionMap.getInstance().bindAction("", -maxsize - 1, self.keyEvent)
-		config.hdmicec.volume_forwarding.addNotifier(self.configVolumeForwarding)
-		config.hdmicec.enabled.addNotifier(self.configVolumeForwarding)
-		if config.hdmicec.enabled.value:
-			if config.hdmicec.report_active_menu.value:
-				if config.hdmicec.report_active_source.value and NavigationInstance.instance and not NavigationInstance.instance.isRestartUI():
-					self.sendMessage(0, "sourceinactive")
-				self.sendMessage(0, "menuactive")
-			if config.hdmicec.handle_deepstandby_events.value and not getFPWasTimerWakeup():
-				self.onLeaveStandby()
 
 	def messageReceived(self, message):
 		if config.hdmicec.enabled.value:
@@ -393,7 +396,7 @@ class HdmiCec:
 			msgaddress = message.getAddress()  # 0 = TV, 5 = receiver 15 = broadcast
 			if CECcmd != "<Polling Message>":
 				print(f"[HdmiCEC][messageReceived0]: msgaddress={msgaddress}  CECcmd={CECcmd}, cmd={cmd:02X}, ctrl0={ctrl0}, datalength={length}")
-				if config.hdmicec.debug.value != "0":
+				if config.hdmicec.debug.value in ["2", "3", "4"]:
 					self.debugRx(length, cmd, ctrl0)
 				if msgaddress > 15:  # workaround for wrong address from driver (e.g. hd51, message comes from tv -> address is only sometimes 0, dm920, same tv -> address is always 0)
 					print("[HdmiCEC][messageReceived1a]: msgaddress > 15 reset to 0")
@@ -565,7 +568,7 @@ class HdmiCec:
 					self.wait.start(int(config.hdmicec.minimum_send_interval.value), True)
 			else:
 				eHdmiCEC.getInstance().sendMessage(msgaddress, cmd, data, len(data))
-			if config.hdmicec.debug.value in ["1", "3"]:
+			if config.hdmicec.debug.value in ["2", "4"]:
 				self.debugTx(msgaddress, cmd, data)
 
 	def sendMsgQ(self):
@@ -700,7 +703,7 @@ class HdmiCec:
 							eHdmiCEC.getInstance().sendMessage(5, cmd, data, len(data))
 						else:
 							eHdmiCEC.getInstance().sendMessage(self.volumeForwardingDestination, cmd, data, len(data))
-					if config.hdmicec.debug.value in ["2", "3"]:
+					if config.hdmicec.debug.value in ["3", "4"]:
 						self.debugTx(self.volumeForwardingDestination, cmd, data)
 					return 1
 				else:
