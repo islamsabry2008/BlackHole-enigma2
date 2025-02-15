@@ -65,10 +65,7 @@ class About(AboutBase):
 
 		AboutText += _("SoC:\t%s\n") % SystemInfo["socfamily"].upper()
 
-		if SystemInfo["boxtype"] in ("gbquad4k", "gbue4k", "gbquad4kpro"):
-			with open("/sys/firmware/devicetree/base/bolt/tag") as f:
-				AboutText += _("Bolt:%s\n") % f.read().strip()[0:4]
-		AboutText += _("Remote:\t%s\n") % SystemInfo["RCName"]
+		AboutText += _("Remote:\t%s\n") % SystemInfo["RCName"].upper()
 
 		tempinfo = ""
 		if path.exists("/proc/stb/sensors/temp0/value"):
@@ -113,7 +110,7 @@ class About(AboutBase):
 		if fileHas("/proc/cmdline", "rootsubdir=linuxrootfs0"):
 			AboutText += _("Boot Device: \tRecovery Slot\n")
 		elif "BootDevice" in SystemInfo and SystemInfo["BootDevice"]:
-			AboutText += _("Boot Device:\t%s%s\n") % (VuPlustxt, SystemInfo["BootDevice"])
+			AboutText += _("Boot Device:\t%s%s\n") % (VuPlustxt, SystemInfo["BootDevice"].capitalize())
 
 		if SystemInfo["HasH9SD"]:
 			if "rootfstype=ext4" in open("/sys/firmware/devicetree/base/chosen/bootargs", "r").read():
@@ -143,7 +140,7 @@ class About(AboutBase):
 		if isPluginInstalled("ServiceApp") and config.plugins.serviceapp.servicemp3.replace.value:
 			AboutText += _("4097 iptv player:\t%s\n") % config.plugins.serviceapp.servicemp3.player.value
 		else:
-			AboutText += _("4097 iptv player:\tDefault player\n")
+			AboutText += _("4097 iptv player:\tDefault Player\n")
 		AboutText += _("Python:\t%s\n") % about.getPythonVersionString()
 		AboutText += _("Last E2 update:\t%s (%s)\n") % (about.getLastCommitHash(), about.getLastCommitDate())
 		AboutText += _("E2 (re)starts:\t%s\n") % config.misc.startCounter.value
@@ -163,11 +160,15 @@ class About(AboutBase):
 			AboutText += fp_version + "\n"
 
 		bootloader = ""
-		if path.exists('/sys/firmware/devicetree/base/bolt/tag'):
-			f = open('/sys/firmware/devicetree/base/bolt/tag', 'r')
-			bootloader = f.readline().replace('\x00', '').replace('\n', '')
-			f.close()
-			AboutText += _("Bootloader:\t%s\n") % (bootloader)
+		if SystemInfo["boxtype"] in ("gbquad4k", "gbue4k", "gbquad4kpro"):
+			with open("/sys/firmware/devicetree/base/bolt/tag") as f:
+				AboutText += _("Bolt:%s\n") % f.read().strip()[0:4]
+		else:
+			if path.exists('/sys/firmware/devicetree/base/bolt/tag'):
+				f = open('/sys/firmware/devicetree/base/bolt/tag', 'r')
+				bootloader = f.readline().replace('\x00', '').replace('\n', '')
+				f.close()
+				AboutText += _("Bootloader:\t%s\n") % (bootloader)
 
 		self["AboutScrollLabel"].setText(AboutText)
 
